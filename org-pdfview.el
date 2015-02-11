@@ -46,8 +46,7 @@
     ;; This buffer is in pdf-view-mode
     (let* ((path buffer-file-name)
 	   (page (pdf-view-current-page))
-	   (link (concat "pdfview:" path "::" (number-to-string page)))
-	   (description ""))
+	   (link (concat "pdfview:" path "::" (number-to-string page))))
       (org-store-link-props
        :type "pdfview"
        :link link
