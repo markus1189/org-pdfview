@@ -42,8 +42,8 @@
 
 (defun org-pdfview-store-link ()
   "Store a link to a pdfview buffer."
-  (when (eq major-mode 'pdfview-mode)
-    ;; This buffer is in pdfview-mode
+  (when (eq major-mode 'pdf-view-mode)
+    ;; This buffer is in pdf-view-mode
     (let* ((path buffer-file-name)
 	   (page (pdf-view-current-page))
 	   (link (concat "pdfview:" path "::" (number-to-string page)))
