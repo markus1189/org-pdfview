@@ -1,0 +1,12 @@
+* NOTE
+
+If you want to integrate it into Org-mode seamlessly.
+
+```lisp
+;; this is in org-pdfview by default already.
+;; (org-add-link-type "pdfview" 'org-pdfview-open 'org-pdfview-export)
+;; change Org-mode default open PDF file function.
+;; for example [[file:filename.pdf][DESC]]
+(add-to-list 'org-file-apps '("\\.pdf\\'" . org-pdfview-open))
+(add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
+```
