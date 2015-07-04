@@ -27,6 +27,10 @@
 ;; To enable this automatically, use:
 ;;     (eval-after-load 'org '(require 'org-pdfview))
 
+;; If you want, you can also configure the org-mode default open PDF file function.
+;;     (add-to-list 'org-file-apps '("\\.pdf\\'" . org-pdfview-open))
+;;     (add-to-list 'org-file-apps '("\\.pdf::\\([[:digit:]]+\\)\\'" . org-pdfview-open))
+
 ;;; Code:
 (require 'org)
 (require 'pdf-tools)
@@ -39,7 +43,7 @@
   "Open LINK in pdf-view-mode."
   (when (string-match "\\(.*\\)::\\([0-9]+\\)$"  link)
     (let* ((path (match-string 1 link))
-	   (page (string-to-number (match-string 2 link))))
+           (page (string-to-number (match-string 2 link))))
       (org-open-file path 1)
       (pdf-view-goto-page page))))
 
@@ -48,8 +52,8 @@
   (when (eq major-mode 'pdf-view-mode)
     ;; This buffer is in pdf-view-mode
     (let* ((path buffer-file-name)
-	   (page (pdf-view-current-page))
-	   (link (concat "pdfview:" path "::" (number-to-string page))))
+           (page (pdf-view-current-page))
+           (link (concat "pdfview:" path "::" (number-to-string page))))
       (org-store-link-props
        :type "pdfview"
        :link link
@@ -58,7 +62,7 @@
 (defun org-pdfview-export (link description format)
   "Export the pdfview LINK with DESCRIPTION for FORMAT from Org files."
   (let* ((path (when (string-match "\\(.+\\)::.+" link)
-		 (match-string 1 link)))
+                 (match-string 1 link)))
          (desc (or description link)))
     (when (stringp path)
       (setq path (org-link-escape (expand-file-name path)))
