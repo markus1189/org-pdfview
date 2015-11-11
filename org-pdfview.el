@@ -41,11 +41,22 @@
 
 (defun org-pdfview-open (link)
   "Open LINK in pdf-view-mode."
-  (when (string-match "\\(.*\\)::\\([0-9]+\\)$"  link)
-    (let* ((path (match-string 1 link))
-           (page (string-to-number (match-string 2 link))))
-      (org-open-file path 1)
-      (pdf-view-goto-page page))))
+  (cond ((string-match "\\(.*\\)::\\([0-9]\\)*\\+\\+\\([[0-9]\\.*[0-9]*\\)"  link)
+         (let* ((path (match-string 1 link))
+                (page (string-to-number (match-string 2 link)))
+                (height (string-to-number (match-string 3 link))))
+           (org-open-file path 1)
+           (pdf-view-goto-page page)
+           (image-set-window-vscroll
+            (round (/ (* height (car (pdf-view-image-size))) (frame-char-height))))))
+        ((string-match "\\(.*\\)::\\([0-9]+\\)$"  link)
+         (let* ((path (match-string 1 link))
+                (page (string-to-number (match-string 2 link))))
+           (org-open-file path 1)
+           (pdf-view-goto-page page)))
+        (t
+         (org-open-file link 1))
+        ))
 
 (defun org-pdfview-store-link ()
   "Store a link to a pdfview buffer."
