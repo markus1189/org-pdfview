@@ -41,7 +41,7 @@
 
 (defun org-pdfview-open (link)
   "Open LINK in pdf-view-mode."
-  (cond ((string-match "\\(.*\\)::\\([0-9]\\)*\\+\\+\\([[0-9]\\.*[0-9]*\\)"  link)
+  (cond ((string-match "\\(.*\\)::\\([0-9]*\\)\\+\\+\\([[0-9]\\.*[0-9]*\\)"  link)
          (let* ((path (match-string 1 link))
                 (page (string-to-number (match-string 2 link)))
                 (height (string-to-number (match-string 3 link))))
