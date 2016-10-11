@@ -36,8 +36,12 @@
 (require 'pdf-tools)
 (require 'pdf-view)
 
-(org-add-link-type "pdfview" 'org-pdfview-open 'org-pdfview-export)
-(add-hook 'org-store-link-functions 'org-pdfview-store-link)
+(if (fboundp 'org-link-set-parameters)
+    (org-link-set-parameters "pdfview"
+                             :follow #'org-pdfview-open
+                             :store #'org-pdfview-store-link)
+  (org-add-link-type "pdfview" 'org-pdfview-open)
+  (add-hook 'org-store-link-functions 'org-pdfview-store-link))
 
 (defun org-pdfview-open (link)
   "Open LINK in pdf-view-mode."
