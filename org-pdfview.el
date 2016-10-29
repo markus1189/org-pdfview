@@ -52,7 +52,7 @@
            (org-open-file path 1)
            (pdf-view-goto-page page)
            (image-set-window-vscroll
-            (round (/ (* height (car (pdf-view-image-size))) (frame-char-height))))))
+            (round (/ (* height (cdr (pdf-view-image-size))) (frame-char-height))))))
         ((string-match "\\(.*\\)::\\([0-9]+\\)$"  link)
          (let* ((path (match-string 1 link))
                 (page (string-to-number (match-string 2 link))))
