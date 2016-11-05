@@ -39,6 +39,7 @@
 (if (fboundp 'org-link-set-parameters)
     (org-link-set-parameters "pdfview"
                              :follow #'org-pdfview-open
+                             :complete #'org-pdfview-complete-link
                              :store #'org-pdfview-store-link)
   (org-add-link-type "pdfview" 'org-pdfview-open)
   (add-hook 'org-store-link-functions 'org-pdfview-store-link))
@@ -87,11 +88,11 @@
        ((eq format 'ascii) (format "%s (%s)" desc path))
        (t path)))))
 
-(defun org-pdfview-complete-link ()
+(defun org-pdfview-complete-link (&optional arg)
   "Use the existing file name completion for file.
 Links to get the file name, then ask the user for the page number
 and append it."
-  (concat (replace-regexp-in-string "^file:" "pdfview:" (org-file-complete-link))
+  (concat (replace-regexp-in-string "^file:" "pdfview:" (org-file-complete-link arg))
 	  "::"
 	  (read-from-minibuffer "Page:" "1")))
 
