@@ -6,7 +6,7 @@
 ;; Maintainer: Markus Hauck <markus1189@gmail.com>
 ;; Keywords: org, pdf-view, pdf-tools
 ;; Version: 0.1
-;; Package-Requires: ((org "6.01") (pdf-tools "0.40"))
+;; Package-Requires: ((org "6.01") (pdf-tools "0.80"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
