@@ -66,13 +66,29 @@
   "Store a link to a pdfview buffer."
   (when (eq major-mode 'pdf-view-mode)
     ;; This buffer is in pdf-view-mode
-    (let* ((path buffer-file-name)
+    (let* ((path (org-pdfview-path buffer-file-name))
            (page (pdf-view-current-page))
            (link (concat "pdfview:" path "::" (number-to-string page))))
       (org-store-link-props
        :type "pdfview"
        :link link
        :description path))))
+
+(defun org-pdfview-path (path)
+  "Generate path name based on `org-link-file-path-type'."
+  (cond
+   ((eq org-link-file-path-type 'absolute) (abbreviate-file-name (expand-file-name path)))
+   ((eq org-link-file-path-type 'noabbrev) (expand-file-name path))
+   ((eq org-link-file-path-type 'relative) (file-relative-name path))
+   (t
+    (save-match-data
+      (if (string-match (concat "^" (regexp-quote
+                                     (expand-file-name
+                                      (file-name-as-directory default-directory))))
+                        (expand-file-name path))
+		  ;; Return relative path name.
+		  (substring (expand-file-name path) (match-end 0))
+        (abbreviate-file-name (expand-file-name path)))))))
 
 (defun org-pdfview-export (link description format)
   "Export the pdfview LINK with DESCRIPTION for FORMAT from Org files."
